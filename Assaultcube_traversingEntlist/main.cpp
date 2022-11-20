@@ -6,6 +6,8 @@ struct offsets {
 	uintptr_t localPlayer = 0x10f4f4;
 
 	uintptr_t health = 0xF8;
+
+	uintptr_t isPlayer = 0x10;
 	uintptr_t name = 0x225;
 } offsets;
 
@@ -25,7 +27,8 @@ int main()
 		for (int i = 1; i < 32; i++) {
 			auto entityList = mem.Read<uintptr_t>(moduleBase + offsets.entitylist);
 			auto curEnt = mem.Read<uintptr_t>(entityList + (uintptr_t)(i * 0x4));
-			if (curEnt != 0x00000000) {
+			auto isPlayer = mem.Read<uintptr_t>(curEnt + offsets.isPlayer);
+			if (curEnt != 0x00000000 && isPlayer == 0) {
 				auto health = mem.Read<int>(curEnt + offsets.health);
 				if (health != 0x00000000)
 				{
