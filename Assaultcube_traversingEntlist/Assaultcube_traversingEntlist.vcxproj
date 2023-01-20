@@ -141,6 +141,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntList.h" />
     <ClInclude Include="Memory.h" />
   </ItemGroup>
   <ItemGroup>

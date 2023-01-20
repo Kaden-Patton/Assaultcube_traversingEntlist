@@ -10,11 +10,12 @@ class Memory
 {
 private:
 	std::uintptr_t processId = 0;
-	void* processHandle = nullptr;
 
 public:
+	void* processHandle = nullptr;
 	// Constructor that finds the process id
 	// and opens a handle
+
 	Memory(const std::string_view processName) noexcept
 	{
 		::PROCESSENTRY32 entry = { };
@@ -74,7 +75,15 @@ public:
 	constexpr const T Read(const std::uintptr_t& address) const noexcept
 	{
 		T value = { };
-		::ReadProcessMemory(processHandle, reinterpret_cast<const void*>(address), &value, sizeof(T), NULL);
+		::ReadProcessMemory(processHandle, reinterpret_cast<const void*>(address), &value, sizeof(value), NULL);
+		return value;
+	}
+
+	template <typename T>
+	constexpr const T Read(const std::uintptr_t& address, unsigned int size) const noexcept
+	{
+		T value = { };
+		::ReadProcessMemory(processHandle, reinterpret_cast<const void*>(address), &value, size, NULL);
 		return value;
 	}
 
